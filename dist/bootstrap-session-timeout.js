@@ -54,18 +54,18 @@
             var countdownMessage = opt.countdownMessage ?
                 '<p>' + opt.countdownMessage.replace(/{timer}/g, '<span class="countdown-holder"></span>') + '</p>' : '';
             var coundownBarHtml = opt.countdownBar ?
-                '<div class="progress"> \
-                  <div class="progress-bar progress-bar-striped countdown-bar active" role="progressbar" style="min-width: 15px; width: 100%;"> \
+                '<progress class="progress progress-striped progress-animated progress-danger countdown-bar active" style="min-width: 15px; width: 100%;"> \
                     <span class="countdown-holder"></span> \
-                  </div> \
-                </div>' : '';
+                  </progress>' : '';
 
             // Create timeout warning dialog
             $('body').append('<div class="modal fade" id="session-timeout-dialog"> \
               <div class="modal-dialog"> \
                 <div class="modal-content"> \
                   <div class="modal-header"> \
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button> \
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"> \
+                      <span aria-hidden="true">&times;</span> \
+                    </button> \
                     <h4 class="modal-title">' + opt.title + '</h4> \
                   </div> \
                   <div class="modal-body"> \
@@ -74,7 +74,7 @@
                     ' + coundownBarHtml + ' \
                   </div> \
                   <div class="modal-footer"> \
-                    <button id="session-timeout-dialog-logout" type="button" class="btn btn-default">' + opt.logoutButton + '</button> \
+                    <button id="session-timeout-dialog-logout" type="button" class="btn btn-secondary">' + opt.logoutButton + '</button> \
                     <button id="session-timeout-dialog-keepalive" type="button" class="btn btn-primary" data-dismiss="modal">' + opt.keepAliveButton + '</button> \
                   </div> \
                 </div> \
@@ -111,12 +111,8 @@
                 // but remove the modal too!
                 if ($('#session-timeout-dialog').length > 0 &&
                     $('#session-timeout-dialog').data('bs.modal') &&
-                    $('#session-timeout-dialog').data('bs.modal').isShown) {
-                    // http://stackoverflow.com/questions/11519660/twitter-bootstrap-modal-backdrop-doesnt-disappear
+                    $('#session-timeout-dialog').hasClass('in')) {
                     $('#session-timeout-dialog').modal('hide');
-                    $('body').removeClass('modal-open');
-                    $('div.modal-backdrop').remove();
-
                 }
             });
         }
